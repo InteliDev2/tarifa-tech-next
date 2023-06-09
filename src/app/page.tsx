@@ -1,147 +1,22 @@
 "use client"
 
 import Image from "next/image";
-import { ReactNode, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { FirstForm, SecondForm, ThirdForm } from "./Forms";
 
-type FirstFormInputs = {
-  companyName: string,
-  address: string,
-  phone: number,
-};
-
-type SecondFormInputs = {
-  emploee: string,
-  role: string,
-  age: number,
-};
-
-type ThirdFormInputs = {
-  department: string,
-  manager: string,
-};
-
-function FirstForm() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<FirstFormInputs>();
-  const onSubmit: SubmitHandler<FirstFormInputs> = data => console.log(data);
-
-  console.log(watch("companyName"), watch("address"), watch("phone"), 'errors:', errors) // watch input value by passing the name of it
-
-  return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <>
-      <h2 className={`mb-3 text-2xl font-semibold`}>Basic Company Information</h2>
-      <form key="1" onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-        <div className="form-line">
-          <label>Company Name</label>
-          <input {...register('companyName', { required: true })} />
-        </div>
-        {errors.companyName && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Address</label>
-          <input {...register("address", { required: true })} />
-        </div>
-        {errors.address && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Phone</label>
-          <input type="number" {...register("phone", { pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im })} />
-        </div>
-        <p>* error(s) check on submit only</p>
-        <input type="submit" />
-      </form>
-    </>
-  );
-}
-
-function SecondForm() {
-  const { register, handleSubmit, watch, formState: { errors} } = useForm<SecondFormInputs>();
-  const onSubmit: SubmitHandler<SecondFormInputs> = data => console.log(data);
-
-  console.log(watch("emploee"), watch("role"), watch("age")) // watch input value by passing the name of it
-
-  return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <>
-      <h2 className={`mb-3 text-2xl font-semibold`}>Company Team</h2>
-      <form key="2" onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-        <div className="form-line">
-          <label>Emploee</label>
-          <input {...register('emploee', { required: true })} />
-        </div>
-        {errors.emploee && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Role</label>
-          <input {...register('role', { required: true })} />
-        </div>
-        {errors.role && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Age</label>
-          <input type="number" {...register('age')} />
-        </div>
-        <p>* error(s) check on submit only</p>
-        <input type="submit" />
-      </form>
-    </>
-  );
-}
-
-function ThirdForm() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<ThirdFormInputs>();
-  const onSubmit: SubmitHandler<ThirdFormInputs> = data => console.log(data);
-
-  console.log(watch("department"), watch("manager")) // watch input value by passing the name of it
-
-  return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <>
-      <h2 className={`mb-3 text-2xl font-semibold`}>Company Departments</h2>
-      <form key="3" onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-        <div className="form-line">
-          <label>Department</label>
-          <input {...register('department', { required: true })} />
-        </div>
-        {errors.department && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Manager</label>
-          <input {...register('manager', { required: true })} />
-        </div>
-        {errors.manager && <span>This field is required</span>}
-        <p>* error(s) check on submit only</p>
-        <input type="submit" />
-      </form>
-    </>
-  );
+const renderFormFunc = (page: number, setPage: (value: number) => void) => {
+  switch (page) {
+    case 2:
+      return SecondForm(page, setPage)
+    case 3:
+      return ThirdForm(page, setPage)
+    default:
+      return FirstForm(page, setPage)
+  }
 }
 
 export default function Home() {
-  const [page, setPage] = useState(1)
-  
-
-  const handleClickNext = () => {
-    setPage(page + 1)
-  }
-
-  const handleClickBack = () => {
-    if (page > 1) {
-      setPage(page - 1)
-    }
-  }
-
-  const Component = (page: number): ReactNode => {
-    switch (page) {
-      case 2:
-        return SecondForm()
-      case 3:
-        return ThirdForm() 
-      default:
-        return FirstForm()
-    }
-  }
-
-  console.log('page:', page)
+  const [page, setPage] = useState<number>(1)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -250,11 +125,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-      {Component(page)}
-      <div className="form-line">
-        <button onClick={() => handleClickBack()}>Back</button>
-        <button onClick={() => handleClickNext()}>Next</button>
-      </div>
+      {renderFormFunc(page, setPage)}
     </main>
   );
 }

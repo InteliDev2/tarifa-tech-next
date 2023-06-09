@@ -56,11 +56,19 @@ label {
     margin-right: 6px;
 }
 
-button {
+button, input[type=submit] {
     padding: 4px 24px;
     border: 1px solid cadetblue;
     border-radius: 4px;
     margin-right: 20px;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 0;
+}
+
+button {
+    margin-right: 8px;
 }
 
 span {
@@ -71,8 +79,4 @@ span {
     align-items: center;
     margin-left: 6px;
     white-space: nowrap;
-}
-
-p {
-    color: rebeccapurple;
 }
