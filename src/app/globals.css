@@ -25,7 +25,8 @@ body {
 
 form {
     max-width: 500px;
-    margin: 0 auto;
+    margin: 26px auto 0;
+    width: 400px;
 }
 
 .form {
@@ -52,11 +53,11 @@ input {
 label {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
     margin-right: 6px;
 }
 
-button, input[type=submit] {
+button,
+input[type=submit] {
     padding: 4px 24px;
     border: 1px solid cadetblue;
     border-radius: 4px;
@@ -64,7 +65,7 @@ button, input[type=submit] {
     width: 100%;
     font-size: 14px;
     cursor: pointer;
-    margin: 0;
+    margin: 20px 0 0;
 }
 
 button {
@@ -79,4 +80,12 @@ span {
     align-items: center;
     margin-left: 6px;
     white-space: nowrap;
+}
+
+progress {
+    width: 100%;
+}
+
+div.flex-no-shrink {
+    flex: 1 1 100%;
 }

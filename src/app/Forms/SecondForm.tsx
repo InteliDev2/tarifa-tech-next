@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 
-type SecondFormInputs = {
+type SecondFormInput = {
   emploee: string,
   role: string,
   age: number,
@@ -10,7 +10,7 @@ type SecondFormInputs = {
 
 // TODO: should be reused with general Form component later on
 export function SecondForm(page: number, setPage: (value: number) => void) {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<SecondFormInputs>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<SecondFormInput>();
 
   const handleClickNext = () => {
     setPage(page + 1)
@@ -33,27 +33,30 @@ export function SecondForm(page: number, setPage: (value: number) => void) {
 
   return (
     <>
-      <h2 className={`mb-3 text-2xl font-semibold`}>Company Team</h2>
-      <form key="2" onSubmit={handleSubmit(onSubmit, onError)}>
-        <div className="form-line">
-          <label>Emploee</label>
-          <input {...register('emploee', { required: true })} />
-        </div>
-        {errors.emploee && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Role</label>
-          <input {...register('role', { required: true })} />
-        </div>
-        {errors.role && <span>This field is required</span>}
-        <div className="form-line">
-          <label>Age</label>
-          <input type="number" {...register('age')} />
-        </div>
-        <div className="form-line">
-          {page > 1 && <button onClick={() => handleClickBack()}>Back</button>}
-          {page < 3 && <input type="submit" value="Next" />}
-        </div>
-      </form>
+      <progress value={2} max={5} />
+      <div>
+        <h2 className={`mb-3 text-2xl font-semibold`}>Company Team</h2>
+        <form key="2" onSubmit={handleSubmit(onSubmit, onError)}>
+          <div className="form-line">
+            <label>Emploee</label>
+            <input {...register('emploee', { required: true })} />
+          </div>
+          {errors.emploee && <span>This field is required</span>}
+          <div className="form-line">
+            <label>Role</label>
+            <input {...register('role', { required: true })} />
+          </div>
+          {errors.role && <span>This field is required</span>}
+          <div className="form-line">
+            <label>Age</label>
+            <input type="number" {...register('age')} />
+          </div>
+          <div className="form-line">
+            {page > 1 && <button onClick={() => handleClickBack()}>Back</button>}
+            {page < 3 && <input type="submit" value="Next" />}
+          </div>
+        </form>
+      </div>
     </>
   );
 }
