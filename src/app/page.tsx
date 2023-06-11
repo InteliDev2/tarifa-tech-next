@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { FirstForm, SecondForm, ThirdForm } from "./Forms";
+import { FirstForm, SecondForm, ThirdForm, FourthForm } from "./Forms";
+import { RenderFormType } from "./types/common";
 
-const renderFormFunc = (page: number, setPage: (value: number) => void) => {
+const renderFormFunc = ({ page, setPage, submitted, setSubmitted }: RenderFormType) => {
   switch (page) {
     case 2:
       return SecondForm(page, setPage)
     case 3:
       return ThirdForm(page, setPage)
+    case 4:
+      return FourthForm({ page, setPage, submitted, setSubmitted })
     default:
       return FirstForm(page, setPage)
   }
@@ -17,6 +20,7 @@ const renderFormFunc = (page: number, setPage: (value: number) => void) => {
 
 export default function Home() {
   const [page, setPage] = useState<number>(1)
+  const [submitted, setSubmitted] = useState<boolean>(false)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -125,7 +129,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-      {renderFormFunc(page, setPage)}
+      {renderFormFunc({ page, setPage, submitted, setSubmitted })}
     </main>
   );
 }
