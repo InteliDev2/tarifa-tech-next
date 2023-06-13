@@ -1,21 +1,11 @@
 "use client"
 
 import { useForm } from "react-hook-form";
-import { RenderFormType } from "../types/common";
-
-type FourthFormInput = {
-  companyName: string,
-  address: string,
-  phone: number,
-  emploee: string,
-  role: string,
-  age: number,
-  department: string,
-  manager: string,
-};
+import { FourthFormInput, RenderFormType } from "../types/common";
+import { ReactNode } from "react";
 
 // TODO: should be reused with general Form component later on
-export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFormType) {
+export function FourthForm({ page, setPage, submitted, setSubmitted, entries, setEntries }: RenderFormType) {
   const { handleSubmit, watch, reset } = useForm<FourthFormInput>()
 
   const goBackToTheFirstForm = () => {
@@ -27,10 +17,55 @@ export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFor
     setPage(page - 1)
   }
 
-  const onSubmit = (data: any) => {
-    console.log('onSubmit -> data:', data);
-    setSubmitted(true)
+  const getAll = async () => {
+    const response = await fetch('http://localhost:3001/api/getAll', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    return response.json();
   }
+
+  const showAllEntries = async () => {
+    try {
+      const entriesList: FourthFormInput[] = await getAll()
+      setEntries(entriesList)
+    } catch (err) {
+      console.log('onSubmit -> err:', err);
+    }
+  }
+
+  const postAll = async (data: FourthFormInput) => {
+    const response = await fetch('http://localhost:3001/api/post', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    return response.json();
+  }
+
+  const onSubmit = async (data: any) => {
+    try {
+      const res = await postAll(data)
+      setSubmitted(true)
+    } catch (err) {
+      console.log('onSubmit -> err:', err);
+    }
+  }
+
+  const renderList = (fields: string[], keys: readonly ("address" | "companyName" | "phone" | "emploee" | "role" | "age" | "department" | "manager")[]): ReactNode => fields.map((_, index) => (
+    <div className="form-line">
+      <label>{fields[index]}:</label>
+      <div className="flex-no-shrink">{watch(keys[index])}</div>
+    </div>
+  ))
+
+  const fieldsList: string[] = ['Company Name', 'Address', 'Phone', 'Emploee', 'Role', 'Age', 'Department', 'Manager']
+  const keysList: readonly ("address" | "companyName" | "phone" | "emploee" | "role" | "age" | "department" | "manager")[] =
+    ['companyName', 'address', 'phone', 'emploee', 'role', 'age', 'department', 'manager']
 
   console.log(watch("companyName"), watch("address"), watch("phone"), watch("emploee"), watch("role"), watch("age"), watch("department"), watch("manager"), '---submitted:', submitted)
 
@@ -44,48 +79,25 @@ export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFor
             <div>
               <h2 className={`mb-3 text-2xl font-semibold`}>Your data has been sent!</h2>
               <button onClick={() => goBackToTheFirstForm()}>Go Back to the First Form</button>
+              <button onClick={() => showAllEntries()}>Show all entries</button>
+              {/*TODO: reuse renderList properly {
+                entries.length > 0 && (
+                  <div className="review">
+                    {renderList(fieldsList, keysList)}
+                  </div>
+                )
+              } */}
             </div>
             :
-            <form key="3" onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-line">
-                <label>Company Name:</label>
-                <div className="flex-no-shrink">{watch("companyName")}</div>
-              </div>
-              <div className="form-line">
-                <label>Address:</label>
-                <div className="flex-no-shrink">{watch("address")}</div>
-              </div>
-              <div className="form-line">
-                <label>Phone:</label>
-                <div className="flex-no-shrink">{watch("phone")}</div>
-              </div>
-              <div className="form-line">
-                <label>Emploee:</label>
-                <div className="flex-no-shrink">{watch("emploee")}</div>
-              </div>
-              <div className="form-line">
-                <label>Role:</label>
-                <div className="flex-no-shrink">{watch("role")}</div>
-              </div>
-              <div className="form-line">
-                <label>Age:</label>
-                <div className="flex-no-shrink">{watch("age")}</div>
-              </div>
-              <div className="form-line">
-                <label>Department:</label>
-                <div className="flex-no-shrink">{watch("department")}</div>
-              </div>
-              <div className="form-line">
-                <label>Manager:</label>
-                <div className="flex-no-shrink">{watch("manager")}</div>
-              </div>
+            <form key="4" onSubmit={handleSubmit(onSubmit)}>
+              {renderList(fieldsList, keysList)}
               <div className="form-line">
                 {page > 1 && <button onClick={() => handleClickBack()}>Back</button>}
                 {page < 5 && <input type="submit" value="Submit" />}
               </div>
             </form>
         }
-      </div>
+      </div >
     </>
   );
 }

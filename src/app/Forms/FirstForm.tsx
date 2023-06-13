@@ -30,7 +30,7 @@ export function FirstForm(page: number, setPage: (value: number) => void) {
       <progress value={1} max={5} />
       <div>
         <h2 className={`mb-3 text-2xl font-semibold`}>Basic Company Information</h2>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <form key="1" onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="form-line">
             <label>Company Name</label>
             <input {...register('companyName', { required: true })} />
