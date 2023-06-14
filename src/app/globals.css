@@ -56,6 +56,10 @@ label {
     margin-right: 6px;
 }
 
+label.show {
+    border: 1px solid black;
+}
+
 button,
 input[type=submit] {
     padding: 4px 24px;
@@ -88,4 +92,17 @@ progress {
 
 div.flex-no-shrink {
     flex: 1 1 100%;
+    border: 1px solid black;
+}
+
+.entries {
+    width: 35%;
+}
+
+.entry {
+    margin: 16px 0;
+}
+
+.remove-btn {
+    margin-bottom: 20px;
 }

@@ -1,27 +1,65 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+
 import { FirstForm, SecondForm, ThirdForm, FourthForm } from "./Forms";
 import { FourthFormInput, RenderFormType } from "./types/common";
+import { fieldsList } from "./constants";
 
-const renderFormFunc = ({ page, setPage, submitted, setSubmitted, entries, setEntries }: RenderFormType) => {
+const renderFormFunc = ({ page, setPage, submitted, setSubmitted }: RenderFormType) => {
   switch (page) {
     case 2:
       return SecondForm(page, setPage)
     case 3:
       return ThirdForm(page, setPage)
     case 4:
-      return FourthForm({ page, setPage, submitted, setSubmitted, entries, setEntries })
+      return FourthForm({ page, setPage, submitted, setSubmitted })
     default:
       return FirstForm(page, setPage)
   }
 }
 
+const getAll = async () => {
+  const response = await fetch('http://localhost:3001/api/getAll', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  return response.json();
+}
+
+const renderEntriesList = (entriesList: { [key: string]: string }[]): ReactNode => entriesList.map((entry) =>
+(
+  <div className="entry">
+    {
+      Object.keys(fieldsList).map((fieldKey) => (
+          <div key={uuidv4()} className="form-line">
+            <label className="show mx-0 py-2 px-2">{fieldsList[fieldKey]}:</label>
+            <div className="flex-no-shrink py-2 px-2">{entry[fieldKey]}</div>
+          </div>
+        )
+      )
+    }
+    <button onClick={() => null} className="remove-btn">Remove all data</button>
+  </div>
+))
+
 export default function Home() {
   const [page, setPage] = useState<number>(1)
   const [submitted, setSubmitted] = useState<boolean>(false)
-  const [entries, setEntries] = useState<FourthFormInput[]>([])
+  const [entries, setEntries] = useState<{ [key: string]: string }[]>([])
+
+  const showAllEntries = async () => {
+    try {
+      const entriesList: { [key: string]: string }[] = await getAll()
+      setEntries(entriesList)
+    } catch (err) {
+      console.log('onSubmit -> err:', err);
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -131,7 +169,15 @@ export default function Home() {
           </p>
         </a>
       </div>
-      {renderFormFunc({ page, setPage, submitted, setSubmitted, entries, setEntries })}
+      {renderFormFunc({ page, setPage, submitted, setSubmitted })}
+      <button onClick={() => showAllEntries()}>Show all entries</button>
+      {
+        entries.length > 0 && (
+          <div className="entries">
+            {renderEntriesList(entries)}
+          </div>
+        )
+      }
     </main>
   );
 }
