@@ -92,6 +92,9 @@ progress {
 
 div.flex-no-shrink {
     flex: 1 1 100%;
+}
+
+.bordered {
     border: 1px solid black;
 }
 

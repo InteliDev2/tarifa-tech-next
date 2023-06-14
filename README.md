@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, run the (UI) development server:
 
 ```bash
 npm run dev
@@ -14,9 +14,16 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser and you will see a progressbar at the bottom of the page and the first form; you will need to fill in all the fields correctly in order to submit them to the server..
+After that run the Express server:
+
+```bash
+npm run server
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser and you will see a progressbar at the bottom of the page and the first form; you will need to fill in all the fields correctly in order to submit them to the server. Also you can click on Show all entries button if DB already has any data sent before.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
 
 ## Learn More
 

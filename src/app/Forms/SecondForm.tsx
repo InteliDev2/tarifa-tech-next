@@ -29,8 +29,6 @@ export function SecondForm(page: number, setPage: (value: number) => void) {
     console.log('onError -> data:', data);
   }
 
-  console.log('SecondForm:', watch("emploee"), watch("role"), watch("age"))
-
   return (
     <>
       <progress value={2} max={5} />
