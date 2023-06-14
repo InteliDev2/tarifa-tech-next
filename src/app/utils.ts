@@ -9,3 +9,5 @@ export function isEmpty(obj: FieldErrors<any> | undefined) {
 
     return true;
 }
+
+export const filterOutEntry = (entries: { [key: string]: string }[], entryId: string) => entries.filter((value) => value._id !== entryId)

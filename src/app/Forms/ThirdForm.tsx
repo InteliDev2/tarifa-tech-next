@@ -28,9 +28,6 @@ export function ThirdForm(page: number, setPage: (value: number) => void) {
     console.log('onError -> data:', data);
   }
 
-  console.log(watch("department"), watch("manager"))
-
-
   return (
     <>
       <progress value={3} max={5} />

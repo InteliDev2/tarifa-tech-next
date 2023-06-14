@@ -6,12 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { fieldsList } from "../constants";
 
 // TODO: should be reused with general Form component later on
-export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFormType) {
+export function FourthForm({ page, setPage, submitted, setSubmitted, entries, setEntries }: RenderFormType) {
   const { handleSubmit, watch, reset } = useForm<FourthFormInput>()
 
   const goBackToTheFirstForm = () => {
     reset()
     setPage(1)
+    setSubmitted(false)
   }
 
   const handleClickBack = () => {
@@ -31,7 +32,12 @@ export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFor
 
   const onSubmit = async (data: any) => {
     try {
-      const res = await postAll(data)
+      await postAll(data)
+
+      if (entries.length > 0) {
+        setEntries(entries.concat([data]))
+      }
+
       setSubmitted(true)
     } catch (err) {
       console.log('onSubmit -> err:', err);
@@ -44,8 +50,6 @@ export function FourthForm({ page, setPage, submitted, setSubmitted }: RenderFor
       <div className="flex-no-shrink">{watch(fieldKey as "companyName" | "address" | "phone" | "emploee" | "role" | "age" | "department" | "manager")}</div>
     </div>
   ))
-
-  console.log(watch("companyName"), watch("address"), watch("phone"), watch("emploee"), watch("role"), watch("age"), watch("department"), watch("manager"), '---submitted:', submitted)
 
   return (
     <>

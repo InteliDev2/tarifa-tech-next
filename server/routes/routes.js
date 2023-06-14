@@ -55,7 +55,7 @@ router.delete('/delete/:id', async (req, res) => {
     try {
         const data = await Model.findByIdAndDelete(req.params.id)
         console.log('---data:', data)
-        res.send(`Document with ${data.name} has been deleted..`)
+        res.send(`Document with ${data.companyName} has been deleted..`)
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

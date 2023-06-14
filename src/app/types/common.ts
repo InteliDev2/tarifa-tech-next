@@ -14,4 +14,6 @@ export type RenderFormType = {
     setPage: (value: number) => void,
     submitted: boolean,
     setSubmitted: (value: boolean) => void,
+    entries: { [key: string]: string }[],
+    setEntries: (value: { [key: string]: string }[]) => void,
 }
