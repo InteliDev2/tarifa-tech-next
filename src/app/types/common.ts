@@ -14,6 +14,4 @@ export type RenderFormType = {
     setPage: (value: number) => void,
     submitted: boolean,
     setSubmitted: (value: boolean) => void,
-    entries: FourthFormInput[],
-    setEntries: (value: FourthFormInput[]) => void,
 }

@@ -28,7 +28,7 @@ export function FirstForm(page: number, setPage: (value: number) => void) {
   return (
     <>
       <progress value={1} max={5} />
-      <div>
+      <div className="flex flex-col py-4">
         <h2 className={`mb-3 text-2xl font-semibold`}>Basic Company Information</h2>
         <form key="1" onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="form-line">

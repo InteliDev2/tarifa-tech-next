@@ -34,7 +34,7 @@ export function ThirdForm(page: number, setPage: (value: number) => void) {
   return (
     <>
       <progress value={3} max={5} />
-      <div>
+      <div className="flex flex-col py-4">
         <h2 className={`mb-3 text-2xl font-semibold`}>Company Departments</h2>
         <form key="3" onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="form-line">
