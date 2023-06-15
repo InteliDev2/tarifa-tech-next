@@ -20,7 +20,9 @@ After that run the Express server:
 npm run server
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser and you will see a progressbar at the bottom of the page and the first form; you will need to fill in all the fields correctly in order to submit them to the server. Also you can click on Show all entries button if DB already has any data sent before.
+Also we use MongoDB Database, so we need to create DB at [MongoDB website](https://account.mongodb.com/account/login), then you may create free shared Cluster. To connect to the DB we need to use MongoDB Compass, while installation you will have such string mongodb+srv://username:password@cluster0.xduyh.mongodb.net/, here username and password the same that you used when you were configuring MongoDB Cluster. Finally create and place .env file in the server directory and add the following variable DATABASE_URL=mongodb+srv://username:password@cluster0.xduyh.mongodb.net/ replacing with your credentials. 
+
+Next, open [http://localhost:3000](http://localhost:3000) with your browser and you will see a progressbar at the bottom of the page and the first form; you will need to fill in all the fields correctly in order to submit them to the server. Also you can click on Show all entries button if DB already has any data sent before.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
