@@ -53,8 +53,8 @@ const renderEntriesList = (entriesList: { [key: string]: string }[], setEntries:
   <div key={uuidv4()} className="entry">
     {
       Object.keys(fieldsList).map((fieldKey) => (
-          <div key={uuidv4()} className="form-line">
-            <label className="show mx-0 py-2 px-2">{fieldsList[fieldKey]}:</label>
+          <div key={uuidv4()} className="flex">
+            <label className="flex show mx-0 py-2 px-2 w-full">{fieldsList[fieldKey]}:</label>
             <div className="flex-no-shrink py-2 px-2 bordered">{entry[fieldKey]}</div>
           </div>
         )

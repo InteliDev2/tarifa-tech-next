@@ -45,8 +45,8 @@ export function FourthForm({ page, setPage, submitted, setSubmitted, entries, se
   }
 
   const renderList = (): JSX.Element[] => Object.keys(fieldsList).map((fieldKey) => (
-    <div key={uuidv4()} className="form-line">
-      <label>{fieldsList[fieldKey]}:</label>
+    <div key={uuidv4()} className="flex">
+      <label className="flex w-full">{fieldsList[fieldKey]}:</label>
       <div className="flex-no-shrink">{watch(fieldKey as "companyName" | "address" | "phone" | "emploee" | "role" | "age" | "department" | "manager")}</div>
     </div>
   ))
@@ -65,9 +65,9 @@ export function FourthForm({ page, setPage, submitted, setSubmitted, entries, se
             :
             <form key="4" onSubmit={handleSubmit(onSubmit)}>
               {renderList()}
-              <div className="form-line">
+              <div className="flex">
                 {page > 1 && <button onClick={() => handleClickBack()}>Back</button>}
-                {page < 5 && <input type="submit" value="Submit" />}
+                {page < 5 && <input type="submit" value="Submit" className="rounded w-full text-sm mb-3" />}
               </div>
             </form>
         }

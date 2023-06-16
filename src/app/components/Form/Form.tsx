@@ -24,16 +24,16 @@ export function Form({ title, labelsList }: FormParamsType) {
             <form key={uuidv4()} onSubmit={handleSubmit(onSubmit)}>
                 {labelsList.map((value) => (
                     <div key={uuidv4()}>
-                        <div className="form-line">
+                        <div className="flex">
                             <label>{value}</label>
-                            <input {...register(transformValue(value), { required: true })} />
+                            <input {...register(transformValue(value), { required: true })} className="rounded w-full text-sm" />
                         </div>
                         {errors[transformValue(value)] && <span>This field is required</span>}
                     </div>
                 )
                 )}
                 <p className="errors-notice">* error(s) check on submit only</p>
-                <input type="submit" />
+                <input type="submit" className="rounded w-full text-sm" />
             </form>
         </div>
     )
