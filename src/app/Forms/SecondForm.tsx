@@ -35,23 +35,23 @@ export function SecondForm(page: number, setPage: (value: number) => void) {
       <div className="flex flex-col py-4">
         <h2 className={`mb-3 text-2xl font-semibold`}>Company Team</h2>
         <form key="2" onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="form-line">
-            <label>Emploee</label>
-            <input {...register('emploee', { required: true })} />
+          <div className="flex">
+            <label className="flex w-full">Emploee</label>
+            <input {...register('emploee', { required: true })} className="rounded w-full text-sm mb-3" />
           </div>
           {errors.emploee && <span>This field is required</span>}
-          <div className="form-line">
-            <label>Role</label>
-            <input {...register('role', { required: true })} />
+          <div className="flex">
+            <label className="flex w-full">Role</label>
+            <input {...register('role', { required: true })} className="rounded w-full text-sm mb-3" />
           </div>
           {errors.role && <span>This field is required</span>}
-          <div className="form-line">
-            <label>Age</label>
-            <input type="number" {...register('age')} />
+          <div className="flex">
+            <label className="flex w-full">Age</label>
+            <input type="number" {...register('age')} className="rounded w-full text-sm mb-3" />
           </div>
-          <div className="form-line">
+          <div className="flex">
             {page > 1 && <button onClick={() => handleClickBack()}>Back</button>}
-            {page < 3 && <input type="submit" value="Next" />}
+            {page < 3 && <input type="submit" value="Next" className="rounded w-full text-sm mb-3" />}
           </div>
         </form>
       </div>
