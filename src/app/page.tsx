@@ -49,21 +49,30 @@ const removeEntry = async (entryId: string) => {
   }
 }
 
+const firstRowBorderTop = (indx: number) => indx === 0 ? 'border-t' : ''
+const lastRowBorderBottom = (indx: number, list: { [key: string]: string }) => indx === Object.keys(list).length - 1 ? 'border-b' : ''
+
 const renderEntriesList = (entriesList: { [key: string]: string }[], setEntries: (value: { [key: string]: string }[]) => void): ReactNode => entriesList.map((entry) => (
   <div key={uuidv4()} className="entry">
-    {
-      Object.keys(fieldsList).map((fieldKey) => (
-          <div key={uuidv4()} className="flex">
-            <label className="flex show mx-0 py-2 px-2 w-full">{fieldsList[fieldKey]}:</label>
-            <div className="flex-no-shrink py-2 px-2 bordered">{entry[fieldKey]}</div>
+    <div className="divide-y divide-teal-600">
+      {
+        Object.keys(fieldsList).map((fieldKey, indx) => (
+          <div key={uuidv4()} className="flex divide-teal-600">
+            <div className={`flex mx-0 py-2 px-2 w-full border-l border-teal-600 ${firstRowBorderTop(indx)} ${lastRowBorderBottom(indx, fieldsList)}`}>
+              {fieldsList[fieldKey]}:
+            </div>
+            <div className={`flex-no-shrink py-2 px-2 border-x border-teal-600 ${firstRowBorderTop(indx)} ${lastRowBorderBottom(indx, fieldsList)}`}>
+              {entry[fieldKey]}
+            </div>
           </div>
         )
-      )
-    }
+        )
+      }
+    </div>
     <button onClick={() => {
       setEntries(filterOutEntry(entriesList, entry._id))
       removeEntry(entry._id)
-    }} className="remove-btn">Remove this entry</button>
+    }} className="remove-btn border-teal-600">Remove this entry</button>
   </div>
 ))
 
@@ -190,7 +199,7 @@ export default function Home() {
         </a>
       </div>
       {renderFormFunc({ page, setPage, submitted, setSubmitted, entries, setEntries })}
-      <button className="my-0 mx-0 w-[400px]" onClick={() => showAllEntries()}>Show all entries</button>
+      <button className="my-0 mx-0 w-[400px] border-teal-600" onClick={() => showAllEntries()}>Show all entries</button>
       {
         entries.length > 0 && (
           <div className="entries">
